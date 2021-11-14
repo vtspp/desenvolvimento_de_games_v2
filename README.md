@@ -1,2 +1,1 @@
-# desenvolvimento_de_games_v2
-# desenvolvimento_de_games_v2
+# Este projeto tem como objetivo, testar possibilidades no desenvolvimento de games usando Java, otimizar e usar padrões de projetos para diminuir o máximo de uso de estruturas condicionais. em tomada de decisões.
