@@ -1,1 +1,1 @@
-# Este projeto tem como objetivo, testar possibilidades no desenvolvimento de games usando Java, otimizar e usar padrões de projetos para diminuir o máximo de uso de estruturas condicionais. em tomada de decisões.
+# Este projeto tem como objetivo, testar possibilidades no desenvolvimento de games usando Java, otimizar e usar padrões de projetos para diminuir o máximo de uso de estruturas condicionais em tomadas de decisões.
