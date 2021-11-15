@@ -31,6 +31,7 @@ public class Loop {
         long lastTime = System.nanoTime();
         long time = System.currentTimeMillis();
 
+        log.info("Looping iniciado");
         while (isRunning) {
             long now = System.nanoTime();
             seconds += (now - lastTime) / ns;
@@ -44,7 +45,7 @@ public class Loop {
                 seconds--;
             }
             if (System.currentTimeMillis() - time >= 1000) {
-                System.out.println("FPS: " + frame);
+                log.info("FPS: {}", frame);
                 frame = 0;
                 time += 1000;
             }

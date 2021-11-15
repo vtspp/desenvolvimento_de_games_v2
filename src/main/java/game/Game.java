@@ -27,6 +27,7 @@ public class Game extends Canvas {
     private static int larguraTela = 1080;
     private static int alturaSprite = 150;
     private static int larguraSprite = 150;
+    private final int velocidadeDeslocamento = 4;
     private transient BufferStrategy strategy;
     private transient Graphics2D graphics2D;
     private transient Map<Integer, Position> positions = new HashMap<>(0);
@@ -34,7 +35,6 @@ public class Game extends Canvas {
     private static final String IMAGE_PATH = "src/main/resources/images";
 
     private static int walkPicture = 1;
-
 
     private Game () {
         JFrame jFrame = new JFrame();
@@ -50,11 +50,7 @@ public class Game extends Canvas {
         // criar graficos
         graphics2D = (Graphics2D) strategy.getDrawGraphics();
         loadImages();
-
-        positions.put(KeyEvent.VK_D, Position.RIGHT);
-        positions.put(KeyEvent.VK_A, Position.LEFT);
-        positions.put(KeyEvent.VK_W, Position.DOWN);
-        positions.put(KeyEvent.VK_X, Position.UP);
+        loadControl();
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -86,8 +82,18 @@ public class Game extends Canvas {
         }
     }
 
+    private void loadControl () {
+        log.info("Carregando controles");
+        positions.put(KeyEvent.VK_D, Position.RIGHT);
+        positions.put(KeyEvent.VK_A, Position.LEFT);
+        positions.put(KeyEvent.VK_W, Position.DOWN);
+        positions.put(KeyEvent.VK_X, Position.UP);
+        positions.forEach((key, value) -> log.info("Direção: {}", value));
+    }
+
     private void loadImages () {
         try {
+            log.info("Carregando images");
             images.put("walk (1)", ImageIO.read(new File(IMAGE_PATH + "/walk/walk (1).png")));
             images.put("walk (2)", ImageIO.read(new File(IMAGE_PATH + "/walk/walk (2).png")));
             images.put("walk (3)", ImageIO.read(new File(IMAGE_PATH + "/walk/walk (3).png")));
@@ -99,8 +105,10 @@ public class Game extends Canvas {
             images.put("walk (9)", ImageIO.read(new File(IMAGE_PATH + "/walk/walk (9).png")));
             images.put("walk (10)", ImageIO.read(new File(IMAGE_PATH + "/walk/walk (10).png")));
             images.put("background", ImageIO.read(new File(IMAGE_PATH + "/forest/forest.jpg")));
+            images.forEach((key, value) -> log.info(key));
         }
         catch (IOException e) {
+            log.error("Não foi possível carregar imagens do game");
             e.printStackTrace();
         }
     }
@@ -113,18 +121,17 @@ public class Game extends Canvas {
     }
 
     protected void render () {
-        log.info("Render");
         graphics2D.drawImage(images.get("background"), 0, 0, larguraTela, alturaTela, null);
-        graphics2D.drawImage(images.get("walk (" + walkPicture + ")"), posicaoX * 4, posicaoY, alturaSprite, larguraSprite, null);
+        graphics2D.drawImage(images.get("walk (" + walkPicture + ")"), posicaoX * velocidadeDeslocamento, posicaoY, alturaSprite, larguraSprite, null);
         strategy.show();
     }
 
-    protected enum Position {
+    private enum Position {
         RIGHT {
             @Override
-            int move() {
+            void move() {
                 updateImage();
-                return posicaoX++;
+                posicaoX++;
             }
 
             @Override
@@ -136,9 +143,9 @@ public class Game extends Canvas {
         },
         LEFT {
             @Override
-            int move() {
+            void move() {
                 updateImage();
-                return posicaoX--;
+                posicaoX--;
             }
 
             @Override
@@ -148,9 +155,9 @@ public class Game extends Canvas {
         },
         UP {
             @Override
-            int move() {
+            void move() {
                 updateImage();
-                return posicaoY++;
+                posicaoY++;
             }
 
             @Override
@@ -160,9 +167,9 @@ public class Game extends Canvas {
         },
         DOWN {
             @Override
-            int move() {
+            void move() {
                 updateImage();
-                return posicaoY--;
+                posicaoY--;
             }
 
             @Override
@@ -173,6 +180,6 @@ public class Game extends Canvas {
 
         abstract void updateImage ();
 
-        abstract int move ();
+        abstract void move ();
     }
 }

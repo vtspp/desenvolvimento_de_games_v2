@@ -1,0 +1,9 @@
+### Intellij ###
+.idea
+.idea/*.xml
+.idea/libraries/*.xml
+.idea/sonarlint/*
+game.iml
+
+# gitignore
+.gitignore
